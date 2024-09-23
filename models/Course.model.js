@@ -1,20 +1,21 @@
 import mongoose from "mongoose";
 import autopopulate from 'mongoose-autopopulate'
 
-const classSchema =  new mongoose.Schema({
+const courseSchema = new mongoose.Schema({
     title: { type: String, required: true },
-    description: { type: String, required: false },
+    description: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: { select: 'username email'} },
     dateCreated: { type: Date, default: Date.now },
     lastUpdated: { type: Date, default: Date.now }
 })
 
-classSchema.pre('save', function(next) {
+courseSchema.pre('save', function(next) {
     this.lastUpdated = Date.now();
     next();
 });
 
-classSchema.plugin(autopopulate);
+courseSchema.plugin(autopopulate);
 
-const Class = mongoose.model('Class', classSchema);
-export default Class;
+const Course = mongoose.model('Course', courseSchema)
+
+export default Course

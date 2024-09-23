@@ -1,17 +1,18 @@
 import Class from '../../models/Class.model.js'
 import * as dotenv from 'dotenv'
+import { authorizationAction, handleResponse } from '../../middlewares/authorization.js'
 
 dotenv.config()
 
 export const registerClass = async (req, res) => {
-    const { title, description } = req.body
+    const document = await authorizationAction(req, res, Class, 'register')
+    if (!document) return
 
-    try {
-        const newClass = new Class({ title, description, user: req.user._id })
-        await newClass.save()
-        res.status(201).json(newClass)
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: 'Server Error' })
-    }
+    return handleResponse(
+        res,
+        201,
+        `User registration successful: ${document.title}`,
+        document
+    )
 }
+
