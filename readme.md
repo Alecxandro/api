@@ -6,7 +6,7 @@ Although it doesn't implement dependency injection, my primary focus was to keep
 
 Of course, it’s built on top of Express.
 
-The key feature of this API is how it handles routes. Instead of declaring each route (as you can see in countless Node.js-based APIs out there), it wraps all route files in a setup.js file and then bootstraps them in a function that takes app = express() as a parameter.
+The key feature of this API is how it handles routes. Instead of declaring each route (as you can see in countless Node.js-based APIs out there), it wraps all route files in a ```setup.js``` file and then bootstraps them in a function that takes ```app = express()``` as a parameter.
 
 Enjoy it!
 
