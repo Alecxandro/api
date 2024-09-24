@@ -13,6 +13,35 @@ export const registerUser = async (req, res) => {
     return handleResponse(res, 201, `User registration successful: ${document.username}`, document)
 }
 
+export const getUser = async (req, res) => {
+    const document = await authorizationAction(req, res, User, 'read')
+    if (!document) return
+    return handleResponse(res, 200, `User details:`, document)
+}
+
+export const getAllUsers = async (req, res) => {
+    const document = await User.find()
+    if (!document) return res.status(404).json({ message: 'Error' })
+
+    if (req.user.role === 'admin') {
+        return res.status(200).json(document)
+    }
+
+    return res.status(201).json({ message: 'Not authorized' })
+}
+
+export const deleteUser = async (req, res) => {
+    const document = await authorizationAction(req, res, User, 'delete')
+    if (!document) return
+    return handleResponse(res, 201, `User deletion successful!`)
+}
+
+export const updateUser = async (req, res) => {
+    const document = await authorizationAction(req, res, User, 'update')
+    if (!document) return
+    return handleResponse(res, 201, `User updated successfully!`, document)
+}
+
 export const loginUser = async (req, res) => {
     const { username, password } = req.body
 
