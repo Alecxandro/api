@@ -1,13 +1,7 @@
 import modelPermissions from './modelPermissions.js'
 import bcrypt from 'bcryptjs'
 
-export const authorizationAction = async (
-    req,
-    res,
-    model,
-    action = 'read',
-    modelName = 'users'
-) => {
+export const authorizationAction = async (req, res, model, action = 'read', modelName = 'users') => {
     const { role } = req.user
     const { id } = req.params
 
